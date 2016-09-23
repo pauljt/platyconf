@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8"> 
+ <script id="worker" type="javascript/worker">
+	onmessage = function(e) {
+	  eval(e.data);
+	}
+</script>
+<script>
+	
+	var workerScript = document.querySelector('#worker').textContent;
+	var blob = new Blob([workerScript], { type: "text/javascript" });
+	var worker = new Worker(window.URL.createObjectURL(blob));
+
+	function RunInWorker(cmd) {
+		worker.postMessage(cmd);
+	}
+
+
+	this["$"+"testcase_content"]={}; //dummy var for testing this file without replacement
+	function testcase() {
+		$testcase_content
+	}
+
+	
+</script>
+
+
+
+</head>
+<body onload="testcase()"></body>
+</html>

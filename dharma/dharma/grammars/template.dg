@@ -1,0 +1,11 @@
+%const% VARIANCE_MAX := 50
+%const% VARIANCE_TEMPLATE := "try { %s } catch (e) { }"
+%const% MAX_REPEAT_POWER := 5
+
+%section% := value
+methods :=
+	performance.now()
+%section% := variable
+%section% := variance
+main :=
+	+methods+

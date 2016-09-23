@@ -1,0 +1,113 @@
+%%% http://searchfox.org/mozilla-central/source/dom/webidl/Performance.webidl
+
+%%% performance
+
+%%% ###########################################################################
+
+%const% VARIANCE_MAX := 50
+%const% VARIANCE_TEMPLATE := "try { %s } catch (e) { }"
+%const% MAX_REPEAT_POWER := 5
+
+%%% ###########################################################################
+%section% := value
+
+bufferSize :=
+	performance.setResourceTimingBufferSize("+common:intoverflow+")
+
+methods :=
+	performance.now()
+	performance.getEntries()
+	performance.getEntriesByType(+entryTypes+)
+	performance.getEntriesByName(+markNames+, +entryTypes+)
+	performance.clearResourceTimings()
+	performance.setResourceTimingBufferSize("+common:intoverflow+")
+	performance.mark(+markNames+)
+	performance.clearMarks("+common:text+")
+	performance.measure(+markNames+,+measureString+,+measureString+)
+	performance.measure("test",+measureString+,+measureString+)
+	performance.measure("test",+markNames+)
+	performance.clearMeasures("+common:text+")
+	performance.toJSON()
+	!timingInfo!.toJSON()
+	performance.navigation.toJSON()
+	performance.measure(!someurl!,"mark-start","mark-end")
+	performance.clearEntries(!markEntries![0].name)
+	fetch(!someurl!)
+
+resourceURLs :=
+	?1
+	?2
+	+url:url+
+
+
+markNames :=
+	"mark_start"
+	"mark_end"
+	""
+
+perfTiming :=
+	toJSON
+	navigationStart
+	unloadEventStart
+	unloadEventEnd
+	redirectStart
+	redirectEnd
+	fetchStart
+	domainLookupStart
+	domainLookupEnd
+	connectStart
+	connectEnd
+	requestStart
+	responseStart
+	responseEnd
+	domLoading
+	domInteractive
+	domContentLoadedEventStart
+	domContentLoadedEventEnd
+	domComplete
+	loadEventStart
+	loadEventEnd
+
+measureString :=
+	+markNames+
+	+perfTiming+
+	"mark"
+	"measure"
+	undefined
+	null
+	{}
+
+entryTypes :=
+	"frame"
+	"mark"
+	"measure"
+	"navigation"
+	"resource"
+	"server"
+
+workerMethods :=
+	RunInWorker(`try { +methods+ } catch(e) {}`)
+
+
+%%% ###########################################################################
+%section% := variable
+
+	someurl:=
+		@someurl@="+url:url+"
+
+	markStart:=
+		@markStart@=performance.mark("mark-start")
+
+	markEnd:=
+		@markEnd@=performance.mark("mark-end")
+
+	markEntries:=
+		@markEntries@=performance.getEntriesByType("mark")
+
+%%% ###########################################################################
+
+%section% := variance
+
+main :=
+	+methods+
+	+workerMethods+
