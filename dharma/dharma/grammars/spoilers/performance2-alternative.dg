@@ -12,16 +12,25 @@
 methods :=
 	performance.now()
 	performance.mark("+common:text+")
+	performance.measure(!someurl!,"mark-start","mark-end")
+	performance.clearEntries(!markEntries![0].name)
+	!markEntries!=performance.getEntriesByType("mark")
 	fetch(!someurl!)
-	!nameEntries!=performance.getEntriesByName(!someurl!)
+
 
 %%% ###########################################################################
 %section% := variable
 someurl:=
 	@someurl@="+url:url+"
 
-nameEntries:=
-	@nameEntries@=[]
+markStart:=
+	@markStart@=performance.mark("mark-start")
+
+markEnd:=
+	@markEnd@=performance.mark("mark-end")
+
+markEntries:=
+	@markEntries@=[]
 
 %%% ###########################################################################
 
